@@ -1,19 +1,22 @@
+const Joi = require("joi");
 
-const Joi = require('joi');
+async function validation(req, res, next) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 
-const schema = Joi.object({
-  name: Joi.string().min(3).max(30).required(),
-  email: Joi.string().email().required(),
-  password: Joi.string().pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')).required(),
-});
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(30).required(),
+    email: Joi.string().pattern(emailRegex).error(new Error("Email should be correct")).required(),
+    password: Joi.string().min(8).max(32).required(),
+    phone: Joi.string().min(10).max(10).error(new Error("Phone number should be more than 10 characters")),
+  });
 
-const validationResult = schema.validate(data);
-
-if (validationResult.error) {
-  // Validation failed
-  console.error(validationResult.error.details);
-} else {
-  // Validation passed
-  console.log('Data is valid');
+  try {
+    await schema.validateAsync(req.body);
+    next();
+  } catch (error) {
+    return res.status(402).json({ error: error.message, message: "Input data not correct" });
+  }
 }
+
+module.exports = validation;

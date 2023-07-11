@@ -2,6 +2,7 @@
 const Users = require("../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const validation = require('../middlewares/Joi')
 const secretKey = process.env.JWT_SECRET_KEY;
 
 class AuthController {
@@ -20,7 +21,7 @@ class AuthController {
     try {
       const { name, email, password, phone } = req.body;
       let isExisting = await Users.findOne({ email: email });
-      console.log("🚀 ~ file: authController.js:22 ~ AuthController ~ register ~ isExisting:", isExisting)
+      // console.log("🚀 ~ file: authController.js:22 ~ AuthController ~ register ~ isExisting:", isExisting)
       if (isExisting) {
         return res.status(409).json({ error: "user is already exist" });
       }
