@@ -19,20 +19,19 @@ class HotelController {
     try {
       const { minPrice, maxPrice } = req.query;
       const responce = await fetch(productAPI, {
-        Method: POST,
+        Method: "POST",
       });
       const data = await responce.json();
-      console.log("🚀 ~ file: hotalController.js:23 ~ HotelController ~ getHotels ~ data:", data);
-      let filteredHotels = data.hotels.filter((hotel) => {
+      let filteredProduct = data.products.filter((product) => {
         if (minPrice && maxPrice) {
-          return hotel.price >= Number(minPrice) && hotel.price <= Number(maxPrice);
+          return product.price >= Number(minPrice) && product.price <= Number(maxPrice);
         } else {
           return true; // If no price range is provided, include all hotels
         }
       });
 
-      filteredHotels.sort((a, b) => a.price - b.price);
-      return res.status(200).json({ Messge: "Success", hotels: filteredHotels });
+      filteredProduct.sort((a, b) => a.price - b.price);
+      return res.status(200).json({ Messge: "Success", Products: filteredProduct });
     } catch (error) {
       console.log(error);
       return res.status(500).json({ msg: "server error", error });
