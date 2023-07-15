@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const authController = require('../controller/authController');
-const hotelController = require('../controller/hotalController');
-const verifyToken = require('../middlewares/verifyToken');
-const joiValidation = require('../middlewares/Joi')
+const hotelController = require('../controller/hotelController');
+const verifyToken = require('../middleware/verifyToken');
+const joiValidation = require('../middleware/Joi')
 
 router.post('/login', authController.login);
 router.post('/register', joiValidation, authController.register);

@@ -2,7 +2,7 @@
 const Users = require("../model/User");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const validation = require('../middlewares/Joi')
+const validation = require('../middleware/Joi')
 const secretKey = process.env.JWT_SECRET_KEY;
 
 class AuthController {
