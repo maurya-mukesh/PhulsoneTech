@@ -1,11 +1,19 @@
+import React from "react";
+import { Route, Routes } from "react-router-dom";
+import routes from "./routes/routes";
+import Layout from "./layout";
+import './styles/app.css';
 
-
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-    </div>
+    <Layout>
+      <Routes>
+        {routes.map((route, idx) => {
+          return <Route key={idx} {...route} />;
+        })}
+      </Routes>
+    </Layout>
   );
-}
+};
 
 export default App;
